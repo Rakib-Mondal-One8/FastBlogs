@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends,HTTPException
 
 
 from schemas import UserCreate
-
+ 
 from services import auth_services
 from starlette import status
 from fastapi.security import OAuth2PasswordRequestForm
@@ -15,7 +15,7 @@ from core.security import create_access_token
 
 
 router = APIRouter(
-    prefix="/auth",
+    prefix="/api/v1/auth",
     tags=['Auth']
 )
 
@@ -40,4 +40,4 @@ async def login(form_data:Annotated[OAuth2PasswordRequestForm,Depends()],db:db_d
     token = create_access_token(user,timedelta(minutes=20))
 
     print(token)
-    return {"access_token" : token,"token_type":"bearer"}
+    return {"access_token" : 'token',"token_type":"bearer"}

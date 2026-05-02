@@ -6,11 +6,11 @@ from database import SessionLocal
 from sqlalchemy.orm import Session
 from schemas import BlogCreate
 from services import blog_services
-import uuid, shutil
+import uuid, shutil 
 from models import Blogs
 from core.dependencies import db_dependency, user_dependency
 
-router = APIRouter(prefix="/blogs", tags=["Blogs"])
+router = APIRouter(prefix="/api/v1/blogs", tags=["Blogs"])
 
 
 @router.get("", status_code=status.HTTP_200_OK)
@@ -19,8 +19,9 @@ async def read_all(db: db_dependency):
     return models
 
 @router.get("/{blog_id}",status_code=status.HTTP_200_OK)
-async def read_blog(db:db_dependency,blog_id:int = Path(gt=0)):
-    return db.query(Blogs).filter(Blogs.id == blog_id).first()
+async def read_blog(user:user_dependency,db:db_dependency,blog_id:int = Path(gt=0)):
+    blog = db.query(Blogs).filter(Blogs.id == blog_id).first()
+    return blog
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
@@ -42,7 +43,7 @@ async def create_blog(
     return blog_services.create_blog(user,db, blog.title, blog.content, blog.author, file)
 
 
-@router.put("/{blog_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/{blog_id}", status_code=status.HTTP_200_OK)
 async def update_blog(
     user: user_dependency,
     db: db_dependency,

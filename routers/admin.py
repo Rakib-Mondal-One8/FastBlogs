@@ -5,12 +5,12 @@ from services import admin_services
 
 
 router = APIRouter(
-    prefix="/admin",
+    prefix="/api/v1/admin",
     tags=["Admin"]
-)
+) 
 
 
-@router.put("/{blog_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/blogs/{blog_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_blog(
     user: user_dependency,
     db: db_dependency,
@@ -28,7 +28,7 @@ async def update_blog(
     return admin_services.update_blog(user,db, blog, blog_id, file)
 
 
-@router.delete("/{blog_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/blogs/{blog_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_blog(
     user: user_dependency, db: db_dependency, blog_id: int = Path(gt=0)
 ):
