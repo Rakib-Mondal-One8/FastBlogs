@@ -8,9 +8,8 @@ from passlib.context import CryptContext
 from jose import jwt,JWTError
 
 
-
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
-oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
 
 SECRET_KEY = secrets.token_hex(32)
 ALGORITHM = "HS256"

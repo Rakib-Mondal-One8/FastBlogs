@@ -36,8 +36,7 @@ async def login(form_data:Annotated[OAuth2PasswordRequestForm,Depends()],db:db_d
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User is not Valid!"
         )
-    
+    print(user)
     token = create_access_token(user,timedelta(minutes=20))
 
-    print(token)
-    return {"access_token" : 'token',"token_type":"bearer"}
+    return {"access_token" : token,"token_type":"bearer"}
