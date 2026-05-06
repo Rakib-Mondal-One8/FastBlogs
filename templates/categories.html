@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <!-- Hero Section -->
+  <section class="relative px-8 md:px-20 py-24 overflow-hidden">
+
+    <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500/20 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/20 blur-3xl rounded-full"></div>
+
+    <div class="relative z-10">
+
+      <p class="uppercase tracking-[0.3em] text-blue-400 text-sm mb-4">
+        Explore Topics
+      </p>
+
+      <h2 class="text-5xl md:text-7xl font-extrabold leading-tight">
+        Browse Blog
+        <br />
+        Categories
+      </h2>
+
+      <p class="mt-8 text-gray-400 text-lg max-w-2xl leading-relaxed">
+        Discover blogs from different categories including backend,
+        databases, authentication, APIs, deployment and more.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- Categories Grid -->
+  <section class="px-8 md:px-20 pb-24">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Category Card -->
+      <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 hover:scale-[1.02] transition duration-300 cursor-pointer">
+
+        <div class="w-16 h-16 rounded-2xl bg-blue-500/20 flex items-center justify-center text-3xl mb-6">
+          ⚡
+        </div>
+
+        <h3 class="text-3xl font-bold group-hover:text-blue-400 transition">
+          FastAPI
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+          Learn about FastAPI architecture, routers, dependencies,
+          authentication and scalable backend systems.
+        </p>
+
+        <div class="mt-8 flex items-center justify-between">
+
+          <span class="text-sm text-gray-500">
+            42 Articles
+          </span>
+
+          <span class="text-blue-400">
+            Explore →
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Category Card -->
+      <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 hover:scale-[1.02] transition duration-300 cursor-pointer">
+
+        <div class="w-16 h-16 rounded-2xl bg-pink-500/20 flex items-center justify-center text-3xl mb-6">
+          🔐
+        </div>
+
+        <h3 class="text-3xl font-bold group-hover:text-pink-400 transition">
+          Security
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+          Explore JWT authentication, OAuth2, hashing,
+          API protection and secure backend practices.
+        </p>
+
+        <div class="mt-8 flex items-center justify-between">
+
+          <span class="text-sm text-gray-500">
+            28 Articles
+          </span>
+
+          <span class="text-pink-400">
+            Explore →
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Category Card -->
+      <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 hover:scale-[1.02] transition duration-300 cursor-pointer">
+
+        <div class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center text-3xl mb-6">
+          🗄️
+        </div>
+
+        <h3 class="text-3xl font-bold group-hover:text-green-400 transition">
+          Databases
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+          Learn SQL, PostgreSQL optimization,
+          indexing, relationships and database design.
+        </p>
+
+        <div class="mt-8 flex items-center justify-between">
+
+          <span class="text-sm text-gray-500">
+            31 Articles
+          </span>
+
+          <span class="text-green-400">
+            Explore →
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Category Card -->
+      <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 hover:scale-[1.02] transition duration-300 cursor-pointer">
+
+        <div class="w-16 h-16 rounded-2xl bg-orange-500/20 flex items-center justify-center text-3xl mb-6">
+          🚀
+        </div>
+
+        <h3 class="text-3xl font-bold group-hover:text-orange-400 transition">
+          Deployment
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+          Deploy FastAPI applications using Docker,
+          Nginx, VPS hosting and cloud platforms.
+        </p>
+
+        <div class="mt-8 flex items-center justify-between">
+
+          <span class="text-sm text-gray-500">
+            19 Articles
+          </span>
+
+          <span class="text-orange-400">
+            Explore →
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Category Card -->
+      <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 hover:scale-[1.02] transition duration-300 cursor-pointer">
+
+        <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center text-3xl mb-6">
+          🧠
+        </div>
+
+        <h3 class="text-3xl font-bold group-hover:text-purple-400 transition">
+          System Design
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+          Understand scalable architecture,
+          caching, load balancing and distributed systems.
+        </p>
+
+        <div class="mt-8 flex items-center justify-between">
+
+          <span class="text-sm text-gray-500">
+            15 Articles
+          </span>
+
+          <span class="text-purple-400">
+            Explore →
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Category Card -->
+      <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 hover:scale-[1.02] transition duration-300 cursor-pointer">
+
+        <div class="w-16 h-16 rounded-2xl bg-cyan-500/20 flex items-center justify-center text-3xl mb-6">
+          🌐
+        </div>
+
+        <h3 class="text-3xl font-bold group-hover:text-cyan-400 transition">
+          APIs
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+          Build REST APIs, understand versioning,
+          request validation and API best practices.
+        </p>
+
+        <div class="mt-8 flex items-center justify-between">
+
+          <span class="text-sm text-gray-500">
+            37 Articles
+          </span>
+
+          <span class="text-cyan-400">
+            Explore →
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+{% endblock %}

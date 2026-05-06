@@ -1,0 +1,54 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FastBlogs</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      body {
+        background: #000;
+        overflow-x: hidden;
+      }
+    </style>
+  </head>
+
+  <body class="text-white">
+    <!-- Navbar -->
+    <nav
+      class="flex items-center justify-between px-8 py-6 border-b border-white/10 backdrop-blur-md sticky top-0 bg-black/70 z-50">
+      <h1 class="text-3xl font-bold tracking-wide">
+        Fast<span class="text-blue-400">Blogs</span>
+      </h1>
+
+      <div class="hidden md:flex gap-8 text-sm text-gray-300">
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/blogs" class="hover:text-white transition">Blogs</a>
+        <a href="/categories" class="hover:text-white transition">Categories</a>
+        <a href="/about" class="hover:text-white transition">About</a>
+      </div>
+
+      <button
+        class="bg-blue-500 hover:bg-blue-600 transition px-5 py-2 rounded-xl font-medium shadow-lg shadow-blue-500/20">
+        Get Started
+      </button>
+    </nav>
+
+    {% block content %} {% endblock %}
+  </body>
+  <!-- Footer -->
+  <footer
+    class="border-t border-white/10 px-8 md:px-20 py-10 text-gray-500 text-sm flex flex-col md:flex-row items-center justify-between gap-4">
+    <p>© 2026 FastBlogs. All rights reserved.</p>
+
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-white transition">GitHub</a>
+      <a href="#" class="hover:text-white transition">LinkedIn</a>
+      <a href="#" class="hover:text-white transition">Twitter</a>
+    </div>
+  </footer>
+</html>

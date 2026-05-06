@@ -13,6 +13,8 @@ from core.dependencies import db_dependency, user_dependency
 router = APIRouter(prefix="/api/v1/blogs", tags=["Blogs"])
 
 
+
+
 @router.get("", status_code=status.HTTP_200_OK)
 async def read_all(db: db_dependency):
     models = db.query(Blogs).all()
