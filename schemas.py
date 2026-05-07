@@ -4,6 +4,7 @@ class BlogCreate(BaseModel):
     title : str = Field(min_length=5)
     content: str = Field(min_length=10)
     author: str = Field(min_length=2)
+    category: str = Field(min_length=7)
 
 class UserCreate(BaseModel):
     email : EmailStr
@@ -36,5 +37,16 @@ class EmailUpdate(BaseModel):
     def check_domain(cls,v):
         v = v.lower()
         if not v.endswith("@gmail.com"):
+            raise ValueError("Only gmail are allowed!")
+        return v
+
+
+class ReaderCreate(BaseModel):
+    email : str
+
+    @field_validator('email')
+    def check_domain(cls,v):
+        v = v.strip().lower()
+        if(not v.endswith('@gmail.com')):
             raise ValueError("Only gmail are allowed!")
         return v

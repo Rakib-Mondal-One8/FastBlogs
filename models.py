@@ -20,5 +20,13 @@ class Blogs(Base):
     title = Column(String)
     content = Column(Text)
     author = Column(String)
+    category = Column(String)
     image_url = Column(String,nullable=True)
     user_id = Column(Integer,ForeignKey("users.id"))
+
+
+class Readers(Base):
+    __tablename__ = 'readers'
+    id = Column(Integer,primary_key=True,index=True)
+    email = Column(String,unique=True)
+    

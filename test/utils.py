@@ -7,7 +7,7 @@ from main import app
 from core.dependencies import get_db
 from core.security import verify_token
 from fastapi import status,HTTPException
-from models import Users,Blogs
+from models import Users,Blogs,Readers
 from core.security import pwd_context
 from pytest import fixture
 import pytest

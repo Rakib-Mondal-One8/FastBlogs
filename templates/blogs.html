@@ -38,25 +38,33 @@
     </div>
 
     <div class="flex flex-wrap gap-3">
-      <button class="px-5 py-2 rounded-xl bg-blue-500">All</button>
+      <button
+        data-category="all"
+        class="categoryBtn px-5 py-2 rounded-xl {{'bg-blue-500' if category == 'all' else 'border border-white/10 hover:bg-white/5 transition'}}">
+        All
+      </button>
 
       <button
-        class="px-5 py-2 rounded-xl border border-white/10 hover:bg-white/5 transition">
+        data-category="backend"
+        class="categoryBtn px-5 py-2 rounded-xl  {{'bg-blue-500' if request.query_params.get('category') == 'backend' else 'border border-white/10 hover:bg-white/5 transition'}}">
         Backend
       </button>
 
       <button
-        class="px-5 py-2 rounded-xl border border-white/10 hover:bg-white/5 transition">
+        data-category="fastapi"
+        class="categoryBtn px-5 py-2 rounded-xl  {{'bg-blue-500' if request.query_params.get('category') == 'fastapi' else 'border border-white/10 hoverbor:bg-white/5 transition'}}">
         FastAPI
       </button>
 
       <button
-        class="px-5 py-2 rounded-xl border border-white/10 hover:bg-white/5 transition">
+        data-category="security"
+        class="categoryBtn px-5 py-2 rounded-xl  {{'bg-blue-500' if request.query_params.get('category') == 'security' else 'border border-white/10 hover:bg-white/5 transition'}}">
         Security
       </button>
 
       <button
-        class="px-5 py-2 rounded-xl border border-white/10 hover:bg-white/5 transition">
+        data-category="databases"
+        class="categoryBtn px-5 py-2 rounded-xl  {{'bg-blue-500' if request.query_params.get('category') == 'databases' else 'border border-white/10 hover:bg-white/5 transition'}}">
         Databases
       </button>
     </div>
@@ -65,17 +73,21 @@
 
 <!-- Blogs Grid -->
 <section class="px-8 md:px-20 py-20">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <!-- Blog Card -->
+  <div
+    id="blogSpace"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for blog in blogs %}
     <div
       class="group bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:scale-[1.02] transition duration-300">
       <div
-        class="h-56 bg-gradient-to-br from-blue-500/40 to-purple-500/40"></div>
+        class="h-50 bg-gradient-to-br from-blue-500/40 to-purple-500/40">
+        <img src="{{blog.image_url}}" alt="">
+      </div>
 
       <div class="p-6">
         <div class="flex items-center justify-between mb-4">
           <span class="text-xs uppercase tracking-[0.2em] text-blue-400">
-            Backend
+            {{blog.category}}
           </span>
 
           <span class="text-sm text-gray-400"> 6 min read </span>
@@ -83,7 +95,7 @@
 
         <h3
           class="text-2xl font-bold leading-snug group-hover:text-blue-300 transition">
-          Mastering FastAPI for Scalable APIs
+          {{blog.title}}
         </h3>
 
         <p class="text-gray-400 mt-4 leading-relaxed">
@@ -96,129 +108,58 @@
             <div class="w-10 h-10 rounded-full bg-blue-500"></div>
 
             <div>
-              <p class="font-medium">Rakib Mondal</p>
+              <p class="font-medium">{{blog.author}}</p>
               <p class="text-sm text-gray-400">May 2026</p>
             </div>
           </div>
 
-          <button class="text-blue-400 hover:text-blue-300 transition">
+          <a href="/blogs/details/{{blog.id}}" class="text-blue-400 hover:text-blue-300 transition">
             Read →
-          </button>
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Blog Card -->
-    <div
-      class="group bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:scale-[1.02] transition duration-300">
-      <div
-        class="h-56 bg-gradient-to-br from-pink-500/40 to-orange-500/40"></div>
-
-      <div class="p-6">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs uppercase tracking-[0.2em] text-pink-400">
-            Security
-          </span>
-
-          <span class="text-sm text-gray-400"> 4 min read </span>
-        </div>
-
-        <h3
-          class="text-2xl font-bold leading-snug group-hover:text-pink-300 transition">
-          JWT Authentication Explained
-        </h3>
-
-        <p class="text-gray-400 mt-4 leading-relaxed">
-          Understand access tokens, refresh tokens, authentication flow and
-          securing your APIs properly.
-        </p>
-
-        <div class="flex items-center justify-between mt-8">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-pink-500"></div>
-
-            <div>
-              <p class="font-medium">Rakib Mondal</p>
-              <p class="text-sm text-gray-400">May 2026</p>
-            </div>
-          </div>
-
-          <button class="text-pink-400 hover:text-pink-300 transition">
-            Read →
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Blog Card -->
-    <div
-      class="group bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:scale-[1.02] transition duration-300">
-      <div
-        class="h-56 bg-gradient-to-br from-green-500/40 to-emerald-500/40"></div>
-
-      <div class="p-6">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs uppercase tracking-[0.2em] text-green-400">
-            Database
-          </span>
-
-          <span class="text-sm text-gray-400"> 8 min read </span>
-        </div>
-
-        <h3
-          class="text-2xl font-bold leading-snug group-hover:text-green-300 transition">
-          PostgreSQL Optimization Tips
-        </h3>
-
-        <p class="text-gray-400 mt-4 leading-relaxed">
-          Improve query performance, indexing strategies and optimize your
-          backend database efficiently.
-        </p>
-
-        <div class="flex items-center justify-between mt-8">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-green-500"></div>
-
-            <div>
-              <p class="font-medium">Rakib Mondal</p>
-              <p class="text-sm text-gray-400">May 2026</p>
-            </div>
-          </div>
-
-          <button class="text-green-400 hover:text-green-300 transition">
-            Read →
-          </button>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </section>
 
 <!-- Pagination -->
 <section class="px-8 md:px-20 pb-24">
   <div class="flex items-center justify-center gap-4">
-    <button
+    {% if page-1 > 0 %}
+      <a
+      href="/blogs?category={{category}}&page={{page - 1}}"
       class="px-5 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">
       Previous
-    </button>
+    </a>
+    {% endif %}
 
-    <button class="px-5 py-3 rounded-xl bg-blue-500">1</button>
+    {% for i in range(1,total_pages+1) %}
+    <a
+      href="/blogs?category={{category}}&page={{i}}"
+      class="px-5 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition 
+      {% if(page == i) %} 
+        bg-blue-500
+      {% else %} 
+        border border-white/10 hover:bg-white/5 transition
+      {%endif%}">
+      {{i}}
+    </a>
+    {% endfor %}
 
-    <button
-      class="px-5 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">
-      2
-    </button>
-
-    <button
-      class="px-5 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">
-      3
-    </button>
-
-    <button
+    {% if page < total_pages %}
+       <a
+      href="/blogs?category={{category}}&page={{page + 1}}"
       class="px-5 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">
       Next
-    </button>
+    </a>
+    {% endif %}
+
   </div>
 </section>
 
+<script
+  type="module"
+  src="{{ url_for('static',path='js/blogs/readBlogs.js')}} "></script>
 {% endblock %}

@@ -1,6 +1,7 @@
 from models import Blogs
-from fastapi import HTTPException
+from fastapi import HTTPException,status
 import shutil, uuid
+from sqlalchemy import func
 
 
 def save_file(file):
@@ -13,12 +14,13 @@ def save_file(file):
     return file_path
 
 
-def create_blog(user, db, title, content, author, file):
+def create_blog(user, db, title, content,category,author, file):
 
     new_blog = Blogs(
         title=title,
         content=content,
         author=author,
+        category=func.lower(category),
         image_url=save_file(file),
         user_id=user.get("user_id"),
     )
@@ -43,6 +45,7 @@ def update_blog(user, db, blog, blog_id, file):
     existing.title = blog.title
     existing.content = blog.content
     existing.author = blog.author
+    existing.category = blog.category
     existing.image_url = save_file(file)
 
     db.add(existing)

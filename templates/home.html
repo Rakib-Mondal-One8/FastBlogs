@@ -28,11 +28,13 @@
 
     <div class="flex flex-wrap gap-4 mt-10">
       <button
+        id="startReading"
         class="bg-blue-500 hover:bg-blue-600 px-7 py-3 rounded-2xl font-semibold transition shadow-lg shadow-blue-500/30">
         Start Reading
       </button>
 
       <button
+        id="exploreBlogs"
         class="border border-white/20 hover:border-white/40 hover:bg-white/5 px-7 py-3 rounded-2xl font-semibold transition">
         Explore Blogs
       </button>
@@ -45,19 +47,19 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <div
       class="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
-      <h3 class="text-4xl font-bold text-blue-400">10K+</h3>
+      <h3 class="text-4xl font-bold text-blue-400">{{readers}}K+</h3>
       <p class="text-gray-400 mt-2">Readers</p>
     </div>
 
     <div
       class="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
-      <h3 class="text-4xl font-bold text-blue-400">2K+</h3>
+      <h3 class="text-4xl font-bold text-blue-400">{{blogs}}K+</h3>
       <p class="text-gray-400 mt-2">Published Blogs</p>
     </div>
 
     <div
       class="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
-      <h3 class="text-4xl font-bold text-blue-400">500+</h3>
+      <h3 class="text-4xl font-bold text-blue-400">{{writers}}+</h3>
       <p class="text-gray-400 mt-2">Active Writers</p>
     </div>
   </div>
@@ -74,10 +76,11 @@
       <h3 class="text-4xl font-bold">Trending Articles</h3>
     </div>
 
-    <button
+    <a
+      href="/blogs"
       class="hidden md:block border border-white/20 px-5 py-2 rounded-xl hover:bg-white/5 transition">
       View All
-    </button>
+    </a>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -168,16 +171,21 @@
 
     <div class="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto mt-10">
       <input
+        id="emailId"
         type="email"
         placeholder="Enter your email"
         class="flex-1 px-6 py-4 rounded-2xl bg-white/10 border border-white/20 outline-none placeholder:text-white/50" />
 
       <button
+        id="subscribe"
         class="bg-white text-black font-semibold px-8 py-4 rounded-2xl hover:scale-105 transition">
         Subscribe
       </button>
     </div>
   </div>
 </section>
+
+<script type="module" src="{{ url_for('static',path='js/base.js') }}"></script>
+<script type="module" src="{{ url_for('static',path='js/readers/subscribe.js') }}"></script>
 
 {% endblock %}
