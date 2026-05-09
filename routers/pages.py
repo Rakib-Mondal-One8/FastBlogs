@@ -3,7 +3,8 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy import func
 from starlette import status
 from models import Readers, Blogs, Users
-from core.dependencies import db_dependency
+from core.dependencies import db_dependency,get_current_user_optinal
+from core.security import redirect_to_login
 
 router = APIRouter(tags=["Pages"])
 
@@ -12,11 +13,12 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/")
 def home_page(request: Request, db: db_dependency):
+    user = get_current_user_optinal(request)
     readers = db.query(Readers).count()
     blogs = db.query(Blogs).count()
     users = db.query(Users).count()
     return templates.TemplateResponse(
-        request, "home.html", {"readers": readers, "blogs": blogs, "writers": users}
+        request, "home.html", {"readers": readers, "blogs": blogs, "writers": users,"user":user}
     )
 
 
@@ -28,6 +30,7 @@ async def read_blogs(
     page: int = Query(default=1),
     limit: int = Query(default=3),
 ):
+    user = get_current_user_optinal(request)
     discard = limit * (page - 1)
     query = db.query(Blogs)
     if category is None or category.lower() == "all":
@@ -36,7 +39,7 @@ async def read_blogs(
         return templates.TemplateResponse(
             request,
             "blogs.html",
-            {"blogs": blogs,"page":page, "limit": limit, "total_pages": total_pages,'category':'all'},
+            {"blogs": blogs,"page":page, "limit": limit, "total_pages": total_pages,'category':'all',"user":user},
         )
 
     total_pages = (
@@ -68,18 +71,63 @@ async def read_blogs(
 
 @router.get("/blogs/details/{blog_id}")
 def read_blog_details(request:Request,db:db_dependency,blog_id:int=Path(gt=0)):
+    user = get_current_user_optinal(request)
     blog = db.query(Blogs).filter(Blogs.id==blog_id).first()
-    return templates.TemplateResponse(request,'details.html',{'blog':blog})
+    return templates.TemplateResponse(request,'details.html',{'blog':blog,"user":user})
 
 @router.get("/categories")
-def categories_page(request: Request):
-    return templates.TemplateResponse(request, "categories.html")
+def categories_page(request: Request,db:db_dependency):
+    user = get_current_user_optinal(request)
+    fastapi_articles = db.query(Blogs).filter(Blogs.category=='fastapi').count()
+    security_articles = db.query(Blogs).filter(Blogs.category=='security').count()
+    database_articles = db.query(Blogs).filter(Blogs.category=='database').count()
+    deployment_articles = db.query(Blogs).filter(Blogs.category=='deployment').count()
+    system_design_articles = db.query(Blogs).filter(Blogs.category=='system design').count()
+    apis_articles = db.query(Blogs).filter(Blogs.category=='apis').count()
+    articles = {
+        'fastapi_count':fastapi_articles,
+        'security_count':security_articles,
+        'databases_count':database_articles,
+        'deployment_count':deployment_articles,
+        'system_design_count':system_design_articles,
+        'apis_count':apis_articles
+    }
+    return templates.TemplateResponse(request, "categories.html",{'articles':articles,"user":user})
 
 
 @router.get("/categories/{topic}")
-def categories_topic_page(request:Request,topic:str):
-    return templates.TemplateResponse(request,"topics.html",{'topic':topic})
+def categories_topic_page(request:Request,db:db_dependency,topic:str):
+    user = get_current_user_optinal(request)
+    category = topic.lower()
+    blogs = db.query(Blogs).filter(Blogs.category==category).all()
+    return templates.TemplateResponse(request,"topics.html",{'blogs':blogs,'topic':topic,"user":user})
 
 @router.get("/about")
 def about_page(request: Request):
-    return templates.TemplateResponse(request, "about.html")
+    user = get_current_user_optinal(request)
+    return templates.TemplateResponse(request, "about.html",{"user":user})
+
+
+
+@router.get("/profile/{username}")
+def profile_page(request:Request,db:db_dependency):
+    user = get_current_user_optinal(request)
+    if not user: return redirect_to_login()
+
+    user_info = db.query(Users).filter(Users.id==user.get('user_id')).first()
+    return templates.TemplateResponse(request,'profile.html',{'user':user_info})
+
+
+@router.get("/auth/register")
+def registration_page(request:Request):
+    return templates.TemplateResponse(request,'register.html')
+
+
+@router.get("/auth/login")
+def login_page(request:Request):
+    return templates.TemplateResponse(request,'login.html')
+
+
+@router.get("/logout")
+def logout_page(request:Request):
+    return redirect_to_login()

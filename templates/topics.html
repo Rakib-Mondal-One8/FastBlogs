@@ -27,67 +27,13 @@
 
 <!-- BLOGS SECTION -->
 <section class="max-w-5xl mx-auto px-6 py-16 space-y-14">
+
+  {% for blog in blogs %}
   <!-- BLOG CARD -->
   <div
     class="bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl hover:-translate-y-1 transition duration-300">
     <img
-      src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
-      alt=""
-      class="w-full h-[320px] object-cover" />
-
-    <div class="p-8">
-      <div class="flex items-center gap-3 mb-5">
-        <span
-          class="bg-blue-500/20 text-blue-400 px-4 py-1 rounded-full text-sm">
-          {{topic}}
-        </span>
-
-        <span class="text-gray-400 text-sm"> May 7, 2026 </span>
-      </div>
-
-      <h2 class="text-4xl font-bold leading-tight">
-        Why Backend Development Matters
-      </h2>
-
-      <p class="text-gray-400 mt-6 leading-8 text-lg">
-        Backend development is the core of every modern web application. It
-        handles authentication, APIs, databases, business logic, and server
-        communication behind the scenes.
-      </p>
-
-      <p class="text-gray-400 mt-4 leading-8 text-lg">
-        Technologies like FastAPI, Django, and Node.js allow developers to build
-        scalable and secure systems that power millions of users.
-      </p>
-
-      <div class="flex items-center justify-between mt-10">
-        <div class="flex items-center gap-4">
-          <img
-            src="https://i.pravatar.cc/60?img=15"
-            alt=""
-            class="w-14 h-14 rounded-full border-2 border-white" />
-
-          <div>
-            <h4 class="font-semibold text-lg">John Doe</h4>
-
-            <p class="text-gray-400 text-sm">Senior Backend Engineer</p>
-          </div>
-        </div>
-
-        <a
-          href="#"
-          class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-xl font-semibold transition">
-          Read Full Blog
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOG CARD -->
-  <div
-    class="bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl hover:-translate-y-1 transition duration-300">
-    <img
-      src="https://images.unsplash.com/photo-1518770660439-4636190af475"
+      src="/{{blog.image_url}}"
       alt=""
       class="w-full h-[320px] object-cover" />
 
@@ -102,7 +48,7 @@
       </div>
 
       <h2 class="text-4xl font-bold leading-tight">
-        The Future of Artificial Intelligence
+        {{blog.title}}
       </h2>
 
       <p class="text-gray-400 mt-6 leading-8 text-lg">
@@ -111,9 +57,7 @@
       </p>
 
       <p class="text-gray-400 mt-4 leading-8 text-lg">
-        AI-powered tools are becoming essential in healthcare, finance,
-        education, and software development, helping businesses improve
-        efficiency and innovation.
+        {{blog.content.split()[:200]|join(' ')}}...
       </p>
 
       <div class="flex items-center justify-between mt-10">
@@ -131,68 +75,15 @@
         </div>
 
         <a
-          href="#"
+          href="/blogs/details/{{blog.id}}"
           class="bg-purple-500 hover:bg-purple-600 px-6 py-3 rounded-xl font-semibold transition">
           Read Full Blog
         </a>
       </div>
     </div>
   </div>
+  {% endfor %}
 
-  <!-- BLOG CARD -->
-  <div
-    class="bg-[#1e293b] rounded-3xl overflow-hidden shadow-2xl hover:-translate-y-1 transition duration-300">
-    <img
-      src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
-      alt=""
-      class="w-full h-[320px] object-cover" />
-
-    <div class="p-8">
-      <div class="flex items-center gap-3 mb-5">
-        <span
-          class="bg-cyan-500/20 text-cyan-400 px-4 py-1 rounded-full text-sm">
-          Startups
-        </span>
-
-        <span class="text-gray-400 text-sm"> April 29, 2026 </span>
-      </div>
-
-      <h2 class="text-4xl font-bold leading-tight">
-        How Tech Startups Scale Fast
-      </h2>
-
-      <p class="text-gray-400 mt-6 leading-8 text-lg">
-        Modern startups use cloud infrastructure, automation tools, and digital
-        marketing to grow rapidly in competitive markets.
-      </p>
-
-      <p class="text-gray-400 mt-4 leading-8 text-lg">
-        Strong product development and user-focused design are key factors
-        behind successful startup growth.
-      </p>
-
-      <div class="flex items-center justify-between mt-10">
-        <div class="flex items-center gap-4">
-          <img
-            src="https://i.pravatar.cc/60?img=33"
-            alt=""
-            class="w-14 h-14 rounded-full border-2 border-white" />
-
-          <div>
-            <h4 class="font-semibold text-lg">David Smith</h4>
-
-            <p class="text-gray-400 text-sm">Startup Founder</p>
-          </div>
-        </div>
-
-        <a
-          href="#"
-          class="bg-cyan-500 hover:bg-cyan-600 px-6 py-3 rounded-xl font-semibold transition">
-          Read Full Blog
-        </a>
-      </div>
-    </div>
-  </div>
 </section>
 
 {% endblock %}

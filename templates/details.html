@@ -13,11 +13,11 @@
   <div
     class="absolute bottom-16 left-1/2 -translate-x-1/2 w-full max-w-5xl px-6">
     <span class="bg-blue-500/20 text-blue-400 px-5 py-2 rounded-full text-sm">
-      Backend Development
+      {{blog.category}}
     </span>
 
     <h1 class="text-5xl md:text-6xl font-bold leading-tight mt-6">
-      Why Backend Development Matters In Modern Applications
+      {{blog.title}}
     </h1>
 
     <p class="text-gray-300 text-lg mt-6 max-w-3xl leading-8">
@@ -48,10 +48,7 @@
   <!-- INTRO -->
   <div class="space-y-8 text-gray-300 text-lg leading-9">
     <p>
-      Backend development is one of the most important parts of modern software
-      systems. While users interact with the frontend interface, the backend
-      handles everything behind the scenes including authentication, databases,
-      APIs, file storage, and server logic.
+      {{blog.content}}
     </p>
 
     <p>
@@ -65,7 +62,7 @@
   <!-- IMAGE -->
   <div class="mt-14">
     <img
-      src="https://images.unsplash.com/photo-1555949963-aa79dcee981c"
+      src="/{{blog.image_url}}"
       alt=""
       class="w-full rounded-3xl shadow-2xl" />
   </div>

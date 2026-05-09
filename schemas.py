@@ -12,8 +12,8 @@ class UserCreate(BaseModel):
     first_name : str = Field(min_length=2)
     last_name : str = Field(min_length=2)
     password : str = Field(min_length=5)
-    phone_number : str = Field(min_length=10)
-    role : str = Field()
+    phone_number : str
+    role : str
 
     @field_validator('email')
     def check_domain(cls,v):

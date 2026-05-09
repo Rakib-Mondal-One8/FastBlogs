@@ -23,7 +23,6 @@ async def read_all(db: db_dependency):
 async def read_blog(
     user: user_dependency, db: db_dependency, blog_id: int = Path(gt=0)
 ):
-    print("Working3")
     blog = db.query(Blogs).filter(Blogs.id == blog_id).first()
     return blog
 

@@ -1,6 +1,6 @@
 from typing import Annotated
-from fastapi import Depends
-from pytest import Session
+from fastapi import Depends,Request
+from sqlalchemy.orm import Session
 from database import SessionLocal
 from core.security import verify_token
 
@@ -11,6 +11,12 @@ def get_db():
     finally:
         db.close()
 
-
 db_dependency = Annotated[Session, Depends(get_db)]
-user_dependency = Annotated[dict(),Depends(verify_token)]
+user_dependency = Annotated[dict ,Depends(verify_token)]
+
+
+def get_current_user_optinal(request:Request):
+    try:
+        return verify_token(request)
+    except:
+        return None

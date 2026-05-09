@@ -36,5 +36,5 @@ def create_user(db,user_create):
         role=user_create.role,
     )
     db.add(user)
-    db.commit()
+    db.commit() 
     db.refresh(user) 
