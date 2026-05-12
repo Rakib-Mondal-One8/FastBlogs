@@ -2,11 +2,11 @@ from datetime import timedelta
 from typing import Annotated
 from fastapi import APIRouter, Depends,HTTPException,Response
 from schemas import UserCreate
-from services import auth_services
+from services import auth_services,cache_service
 from starlette import status
 from fastapi.security import OAuth2PasswordRequestForm
 from core.dependencies import db_dependency
-from core.security import create_access_token
+from core.security import create_access_token,create_refresh_token
 import os
 IS_PRODUCTION = os.getenv("ENV") == "production"
 
@@ -35,7 +35,8 @@ async def login(form_data:Annotated[OAuth2PasswordRequestForm,Depends()],db:db_d
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User is not Valid!"
         )
-    token = create_access_token(user,timedelta(minutes=20))
+    token = create_access_token(user,timedelta(minutes=5))
+    refresh_token = create_refresh_token(user,timedelta(minutes=30))
 
     response.set_cookie(
         key="access_token",
@@ -43,7 +44,17 @@ async def login(form_data:Annotated[OAuth2PasswordRequestForm,Depends()],db:db_d
         httponly=True,
         secure=IS_PRODUCTION,
         samesite="strict" if IS_PRODUCTION else "lax",
-        max_age=1200        # 20 minutes in seconds (matches your timedelta!)
+        max_age=5*60        # 20 minutes in seconds (matches your timedelta!)
     )
 
+    key = f"refresh_token:{user.id}"
+    await cache_service.redis.set(key,refresh_token,30*60)
+
+    response.set_cookie(
+        key='refresh_token',
+        value=refresh_token,
+        httponly=IS_PRODUCTION,
+        samesite="strict" if IS_PRODUCTION else "lax",
+        max_age=30*60
+    )
     return {"message":"Login Successful"}

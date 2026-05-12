@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException, Path, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import func
 from starlette import status
 from models import Readers, Blogs, Users
-from core.dependencies import db_dependency,get_current_user_optinal
+from core.dependencies import db_dependency,get_current_user_optional
 from core.security import redirect_to_login
 
 router = APIRouter(tags=["Pages"])
@@ -12,8 +12,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/")
-def home_page(request: Request, db: db_dependency):
-    user = get_current_user_optinal(request)
+def home_page(request: Request,db: db_dependency,user:dict|None = Depends(get_current_user_optional)):
     readers = db.query(Readers).count()
     blogs = db.query(Blogs).count()
     users = db.query(Users).count()
@@ -26,11 +25,11 @@ def home_page(request: Request, db: db_dependency):
 async def read_blogs(
     request: Request,
     db: db_dependency,
+    user = Depends(get_current_user_optional),
     category: str | None = Query(default=None),
     page: int = Query(default=1),
     limit: int = Query(default=3),
 ):
-    user = get_current_user_optinal(request)
     discard = limit * (page - 1)
     query = db.query(Blogs)
     if category is None or category.lower() == "all":
@@ -70,14 +69,14 @@ async def read_blogs(
     )
 
 @router.get("/blogs/details/{blog_id}")
-def read_blog_details(request:Request,db:db_dependency,blog_id:int=Path(gt=0)):
-    user = get_current_user_optinal(request)
+def read_blog_details(request:Request,db:db_dependency,user = Depends(get_current_user_optional),blog_id:int=Path(gt=0)):
+    # user = get_current_user_optinal()
     blog = db.query(Blogs).filter(Blogs.id==blog_id).first()
     return templates.TemplateResponse(request,'details.html',{'blog':blog,"user":user})
 
 @router.get("/categories")
-def categories_page(request: Request,db:db_dependency):
-    user = get_current_user_optinal(request)
+def categories_page(request: Request,db:db_dependency,user = Depends(get_current_user_optional)):
+    # user = get_current_user_optinal()
     fastapi_articles = db.query(Blogs).filter(Blogs.category=='fastapi').count()
     security_articles = db.query(Blogs).filter(Blogs.category=='security').count()
     database_articles = db.query(Blogs).filter(Blogs.category=='database').count()
@@ -96,22 +95,22 @@ def categories_page(request: Request,db:db_dependency):
 
 
 @router.get("/categories/{topic}")
-def categories_topic_page(request:Request,db:db_dependency,topic:str):
-    user = get_current_user_optinal(request)
+def categories_topic_page(request:Request,db:db_dependency,topic:str,user = Depends(get_current_user_optional),):
+    # user = get_current_user_optinal()
     category = topic.lower()
     blogs = db.query(Blogs).filter(Blogs.category==category).all()
     return templates.TemplateResponse(request,"topics.html",{'blogs':blogs,'topic':topic,"user":user})
 
 @router.get("/about")
-def about_page(request: Request):
-    user = get_current_user_optinal(request)
+def about_page(request: Request,user = Depends(get_current_user_optional)):
+    # user = get_current_user_optinal()
     return templates.TemplateResponse(request, "about.html",{"user":user})
 
 
 
 @router.get("/profile/{username}")
-def profile_page(request:Request,db:db_dependency):
-    user = get_current_user_optinal(request)
+def profile_page(request:Request,db:db_dependency,user = Depends(get_current_user_optional)):
+    # user = get_current_user_optinal()
     if not user: return redirect_to_login()
 
     user_info = db.query(Users).filter(Users.id==user.get('user_id')).first()
